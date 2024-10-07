@@ -37,8 +37,9 @@ function App() {
       <FriendList
         isAddFriend={isAddFriend}
         handleIsAddFriend={handleIsAddFriend}
+        onSplit={handleIsSplit}
       />
-      {isSplit && <SplitFriend onSplit={handleIsSplit} />}
+      {isSplit && <SplitFriend />}
       {isAddFriend && <AddFriend />}
     </div>
   );
@@ -46,11 +47,11 @@ function App() {
 
 export default App;
 
-function FriendList({ isAddFriend, handleIsAddFriend }) {
+function FriendList({ isAddFriend, handleIsAddFriend, onSplit }) {
   return (
     <div className="p-3 flex flex-col lg:w-2/3 mx-auto space-y-3">
       {initialFriends.map((el) => (
-        <Friend img={el.image} name={el.name} />
+        <Friend img={el.image} name={el.name} onSplit={onSplit} />
       ))}
       <div className="flex justify-center md:justify-end pt-6">
         <Button onHandleClick={handleIsAddFriend}>
@@ -78,7 +79,7 @@ function Friend({ onSplit, name, img }) {
   );
 }
 
-function SplitFriend({ onSplit }) {
+function SplitFriend() {
   return (
     <div className="bg-orange-100 md:w-2/3 p-5 rounded-lg">
       <h1 className="text-2xl font-bold mb-5">Split a Bill with Sarah</h1>
@@ -116,7 +117,7 @@ function SplitFriend({ onSplit }) {
         </div>
 
         <div className="flex justify-end pt-3">
-          <Button onHandleClick={onSplit}>Split Bill</Button>
+          <Button>Split Bill</Button>
         </div>
       </div>
     </div>
@@ -125,7 +126,7 @@ function SplitFriend({ onSplit }) {
 
 function AddFriend() {
   return (
-    <div className="flex flex-col p-4 space-y-4 bg-orange-100 md:w-2/3 mx-auto">
+    <div className="flex flex-col p-4 space-y-4 bg-orange-100 md:w-2/3 md:row-start-2 mx-auto">
       <div className="flex justify-between">
         <p className="space-x-1">
           <span>👩🏻‍🤝‍🧑🏽</span>
