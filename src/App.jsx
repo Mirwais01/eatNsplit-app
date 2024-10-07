@@ -21,9 +21,10 @@ const initialFriends = [
 
 function App() {
   return (
-    <div className="container px-4 mx-auto md:space-x-12 space-y-5 md:space-y-0 flex flex-col md:flex-row my-16">
+    <div className="container px-4 mx-auto space-y-5 md:space-y-0 grid md:grid-cols-2 grid-cols-1 my-16">
       <FriendList />
       <SplitFriend />
+      <AddFriend />
     </div>
   );
 }
@@ -32,10 +33,15 @@ export default App;
 
 function FriendList() {
   return (
-    <div className="p-3 flex flex-col md:w-1/3">
+    <div className="p-3 flex flex-col lg:w-2/3 mx-auto">
       <Friend />
       <Friend />
       <Friend />
+      <div className="flex justify-center md:justify-end mt-6">
+        <button className="bg-orange-400 rounded-lg font-bold px-5 py-1 hover:opacity-70">
+          Add friend
+        </button>
+      </div>
     </div>
   );
 }
@@ -65,9 +71,9 @@ function Friend() {
 
 function SplitFriend() {
   return (
-    <div className="bg-orange-100 p-6 md:w-1/3 w-full">
+    <div className="bg-orange-100 md:w-2/3 p-5 rounded-lg">
       <h1 className="text-2xl font-bold mb-5">Split a Bill with Sarah</h1>
-      <div className="flex flex-col space-y-4">
+      <div className="flex flex-col space-y-4 relative">
         <div className="flex justify-between items-center">
           <p>
             <span className="w-10 h-10 p-1">💲</span>
@@ -99,6 +105,38 @@ function SplitFriend() {
           </p>
           <input type="number" className="w-20 h-7 text-center border" />
         </div>
+
+        <div className="flex justify-end">
+          <button className="bg-orange-500 rounded-lg font-bold mt-4 px-5 py-1 hover:opacity-70">
+            Split bill
+          </button>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function AddFriend() {
+  return (
+    <div className="flex flex-col p-4 space-y-4 bg-orange-100 md:w-2/3 mx-auto">
+      <div className="flex justify-between">
+        <p className="space-x-1">
+          <span>👩🏻‍🤝‍🧑🏽</span>
+          <span>friend name</span>
+        </p>
+        <input type="text" className="h-7 text-center" />
+      </div>
+      <div className="flex justify-between">
+        <p className="space-x-1">
+          <span>🎴</span>
+          <span>image URL</span>
+        </p>
+        <input type="text" className="h-7 text-center" />
+      </div>
+      <div className="flex justify-end">
+        <button className="bg-orange-400 font-bold py-1 px-7 rounded-lg">
+          Add
+        </button>
       </div>
     </div>
   );
