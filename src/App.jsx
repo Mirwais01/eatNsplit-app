@@ -37,8 +37,8 @@ function App() {
     setSetSelected(null);
   }
 
-  function handleAddfriend(friend){
-    const newFriend = [...friends , friend];
+  function handleAddfriend(friend) {
+    const newFriend = [...friends, friend];
     setFriends(newFriend);
   }
 
@@ -51,7 +51,7 @@ function App() {
         onSelection={handleSelection}
       />
       {isSelected && <SplitFriend />}
-      {isAddFriend && <AddFriend setFriends={setFriends}/>}
+      {isAddFriend && <AddFriend handleAddfriend={handleAddfriend} />}
     </div>
   );
 }
@@ -157,25 +157,51 @@ function SplitFriend() {
   );
 }
 
-function AddFriend({ setFriends }) {
+function AddFriend({ handleAddfriend }) {
+  const [name, setName] = useState("");
+  const [image, setImage] = useState("");
+
+  // if (!name || !image) return;
+
+  const id = crypto.randomUUID();
+  console.log(id);
+
+  const friend = {
+    name,
+    image,
+    id,
+    balance: 0,
+  };
+
   return (
     <div className="flex flex-col p-4 space-y-4 bg-orange-100 md:w-2/3 md:row-start-2 mx-auto">
       <div className="flex justify-between">
         <p className="space-x-1">
           <span>👩🏻‍🤝‍🧑🏽</span>
+
           <span>friend name</span>
         </p>
-        <input value={} onChange={(e)=> } type="text" className="h-7 text-center" />
+        <input
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+          type="text"
+          className="h-7 text-center"
+        />
       </div>
       <div className="flex justify-between">
         <p className="space-x-1">
           <span>🎴</span>
           <span>image URL</span>
         </p>
-        <input type="text" className="h-7 text-center" />
+        <input
+          value={image}
+          onChange={(e) => setImage(e.target.value)}
+          type="text"
+          className="h-7 text-center"
+        />
       </div>
       <div className="flex justify-end">
-        <Button>Add</Button>
+        <Button onHandleClick={handleAddfriend(friend)}>Add</Button>
       </div>
     </div>
   );
