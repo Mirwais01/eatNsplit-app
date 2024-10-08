@@ -20,38 +20,49 @@ const initialFriends = [
     balance: 0,
   },
 ];
-function App() {
-  const [isSplit, setIsSplit] = useState(false);
-  const [isAddFriend, setAddFriend] = useState(false);
 
-  function handleIsSplit() {
-    setIsSplit((isSplit) => !isSplit);
+function App() {
+  const [friends, setFriends] = useState(initialFriends);
+  const [isAddFriend, setAddFriend] = useState(false);
+  const [isSelected, setSetSelected] = useState(null);
+
+  function handleSelection(friendId) {
+    const selectedFriend = friends.find((friend) => friend.id === friendId);
+    setSetSelected(selectedFriend);
+    setAddFriend(false);
   }
 
   function handleIsAddFriend() {
     setAddFriend((isAddFriend) => !isAddFriend);
+    setSetSelected(null);
+  }
+
+  function handleAddfriend(friend){
+    const newFriend = [...friends , friend];
+    setFriends(newFriend);
   }
 
   return (
     <div className="container px-4 mx-auto space-y-5 md:space-y-0 grid md:grid-cols-2 grid-cols-1 my-16">
       <FriendList
+        friends={friends}
         isAddFriend={isAddFriend}
         handleIsAddFriend={handleIsAddFriend}
-        onSplit={handleIsSplit}
+        onSelection={handleSelection}
       />
-      {isSplit && <SplitFriend />}
-      {isAddFriend && <AddFriend />}
+      {isSelected && <SplitFriend />}
+      {isAddFriend && <AddFriend setFriends={setFriends}/>}
     </div>
   );
 }
 
 export default App;
 
-function FriendList({ isAddFriend, handleIsAddFriend, onSplit }) {
+function FriendList({ isAddFriend, handleIsAddFriend, friends, onSelection }) {
   return (
     <div className="p-3 flex flex-col lg:w-2/3 mx-auto space-y-3">
-      {initialFriends.map((el) => (
-        <Friend img={el.image} name={el.name} onSplit={onSplit} />
+      {friends.map((el) => (
+        <Friend friend={el} onSelection={onSelection} />
       ))}
       <div className="flex justify-center md:justify-end pt-6">
         <Button onHandleClick={handleIsAddFriend}>
@@ -62,18 +73,32 @@ function FriendList({ isAddFriend, handleIsAddFriend, onSplit }) {
   );
 }
 
-function Friend({ onSplit, name, img }) {
+function Friend({ friend, onSelection }) {
   return (
     <div className="flex justify-between space-x-4 p-1 items-center hover:bg-orange-100 hover:rounded-lg duration-100">
       <div className="flex space-x-5">
-        <img src={img} className="rounded-full" alt="" />
+        <img src={friend.image} className="rounded-full" alt="" />
         <div>
-          <p className="font-bold">{name}</p>
-          <p>You owe to clark</p>
+          <p className="font-bold">{friend.name}</p>
+          <p
+            className={`${
+              friend.balance > 0
+                ? "text-green-500"
+                : friend.balance < 0
+                ? "text-red-600"
+                : "text-black"
+            }`}
+          >
+            {friend.balance > 0
+              ? `${friend.name} owe you ${friend.balance}`
+              : friend.balance < 0
+              ? `You owe ${friend.name} ${friend.balance}`
+              : `You and ${friend.name} are even ${friend.balance}`}
+          </p>
         </div>
       </div>
       <div>
-        <Button onHandleClick={onSplit}>Select</Button>
+        <Button onHandleClick={onSelection}>Select</Button>
       </div>
     </div>
   );
@@ -105,7 +130,12 @@ function SplitFriend() {
             <span className="w-10 h-10 p-1">👩🏻‍🤝‍🧑🏻</span>
             <span>Sara's expense</span>
           </p>
-          <input type="text" className="w-20 h-7 text-center border" />
+          <input
+            type="text"
+            disabled
+            value={23}
+            className="w-20 h-7 text-center border"
+          />
         </div>
 
         <div className="flex justify-between items-center">
@@ -113,7 +143,10 @@ function SplitFriend() {
             <span className="w-10 h-10 p-1">🤑</span>
             <span>Who's paying the bill?</span>
           </p>
-          <input type="number" className="w-20 h-7 text-center border" />
+          <select name="" id="" className="w-20 h-7 text-center border">
+            <option value="You">You</option>
+            <option value="Sarah">Sarah</option>
+          </select>
         </div>
 
         <div className="flex justify-end pt-3">
@@ -124,7 +157,7 @@ function SplitFriend() {
   );
 }
 
-function AddFriend() {
+function AddFriend({ setFriends }) {
   return (
     <div className="flex flex-col p-4 space-y-4 bg-orange-100 md:w-2/3 md:row-start-2 mx-auto">
       <div className="flex justify-between">
@@ -132,7 +165,7 @@ function AddFriend() {
           <span>👩🏻‍🤝‍🧑🏽</span>
           <span>friend name</span>
         </p>
-        <input type="text" className="h-7 text-center" />
+        <input value={} onChange={(e)=> } type="text" className="h-7 text-center" />
       </div>
       <div className="flex justify-between">
         <p className="space-x-1">
