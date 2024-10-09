@@ -164,9 +164,9 @@ function AddFriend({ handleAddfriend }) {
   // if (!name || !image) return;
 
   const id = crypto.randomUUID();
-  console.log(id);
+  // console.log(id);
 
-  const friend = {
+  const newfriend = {
     name,
     image,
     id,
@@ -201,7 +201,7 @@ function AddFriend({ handleAddfriend }) {
         />
       </div>
       <div className="flex justify-end">
-        <Button onHandleClick={handleAddfriend(friend)}>Add</Button>
+        <Button>Add</Button>
       </div>
     </div>
   );
