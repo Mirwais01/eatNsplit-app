@@ -1,3 +1,6 @@
+import AddFriend from "./AddFriend";
+import Button from "./Button";
+
 const initialFriends = [
   {
     id: 118836,
@@ -21,16 +24,22 @@ const initialFriends = [
 
 export default function App() {
   return (
-    <div className="container mx-auto md:px-12 py-24">
+    <div className="container mx-auto md:px-12 py-24 grid grid-cols-1 md:grid-cols-2">
       {/* sidebar */}
-      <FriendList />
+      <div className="flex flex-col">
+        <FriendList />
+        <AddFriend />
+        <div className="flex justify-end mt-5 me-5 md:me-44">
+          <Button>Close</Button>
+        </div>
+      </div>
     </div>
   );
 }
 
 function FriendList() {
   return (
-    <div className="w-1/3">
+    <div className="md:w-2/3 mx-2">
       <ul className="space-y-2">
         {initialFriends.map((el) => (
           <Friend el={el} key={el.id} />
@@ -43,7 +52,7 @@ function FriendList() {
 function Friend({ el }) {
   return (
     <li className="flex justify-between items-center p-3 rounded-lg hover:bg-orange-100 duration-200">
-      <div className="flex space-x-4">
+      <div className="flex md:space-x-4 space-x-2">
         <div>
           <img className="rounded-full" src={el.image} alt="" />
         </div>
@@ -65,13 +74,5 @@ function Friend({ el }) {
         <Button>Select</Button>
       </div>
     </li>
-  );
-}
-
-function Button({ children }) {
-  return (
-    <button className="bg-orange-400 font-bold hover:bg-orange-300 px-5 py-2 rounded-md">
-      {children}
-    </button>
   );
 }
