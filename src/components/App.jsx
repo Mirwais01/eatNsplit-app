@@ -1,3 +1,4 @@
+import { useState } from "react";
 import AddFriend from "./AddFriend";
 import Button from "./Button";
 
@@ -23,14 +24,22 @@ const initialFriends = [
 ];
 
 export default function App() {
+  const [showAddFriend, setShowAddFriend] = useState(false);
+
+  function handleAddFriend() {
+    setShowAddFriend((showAddFriend) => !showAddFriend);
+  }
+
   return (
-    <div className="container mx-auto md:px-12 py-24 grid grid-cols-1 md:grid-cols-2">
+    <div className="container mx-auto md:px-12 py-20 grid grid-cols-1 md:grid-cols-2">
       {/* sidebar */}
       <div className="flex flex-col">
         <FriendList />
-        <AddFriend />
-        <div className="flex justify-end mt-5 me-5 md:me-44">
-          <Button>Close</Button>
+        {showAddFriend && <AddFriend initialFriends={initialFriends} />}
+        <div className="flex justify-end mt-7 ms-40 md:ms-24 w-1/2">
+          <Button onClickBtn={handleAddFriend}>
+            {showAddFriend ? "Close" : "Add friend"}
+          </Button>
         </div>
       </div>
     </div>
@@ -51,7 +60,7 @@ function FriendList() {
 
 function Friend({ el }) {
   return (
-    <li className="flex justify-between items-center p-3 rounded-lg hover:bg-orange-100 duration-200">
+    <li className="flex justify-between items-center px-2 py-3 rounded-lg hover:bg-orange-100 duration-200">
       <div className="flex md:space-x-4 space-x-2">
         <div>
           <img className="rounded-full" src={el.image} alt="" />
