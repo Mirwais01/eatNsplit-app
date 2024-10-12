@@ -1,10 +1,9 @@
 import { useState } from "react";
 import Button from "./Button";
 
-export default function AddFriend({ initialFriends }) {
-  const [friends, setFriends] = useState(initialFriends);
+export default function AddFriend({ setFriends }) {
   const [name, setName] = useState("");
-  const [image, setImage] = useState("");
+  const [image, setImage] = useState("https://i.pravatar.cc/48");
 
   const id = crypto.randomUUID();
   const newfriend = {
@@ -16,9 +15,11 @@ export default function AddFriend({ initialFriends }) {
 
   function handleSubmitForm(e) {
     e.preventDefault();
+    if (!name || !image) {
+      window.alert("Please enter a name and a image url");
+    }
     setFriends((friends) => [...friends, newfriend]);
     setName("");
-    setImage("");
   }
 
   return (
