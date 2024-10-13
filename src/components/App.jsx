@@ -1,6 +1,7 @@
 import { useState } from "react";
 import AddFriend from "./AddFriend";
 import Button from "./Button";
+import SplitForm from "./SplitForm";
 
 const initialFriends = [
   {
@@ -25,32 +26,36 @@ const initialFriends = [
 
 export default function App() {
   const [showAddFriend, setShowAddFriend] = useState(false);
+  const [friends, setFriends] = useState(initialFriends);
 
   function handleAddFriend() {
     setShowAddFriend((showAddFriend) => !showAddFriend);
   }
 
   return (
-    <div className="container mx-auto md:px-12 py-20 grid grid-cols-1 md:grid-cols-2">
+    <div className="container mx-auto md:px-12 py-16 grid grid-cols-1 md:grid-cols-2">
       {/* sidebar */}
-      <div className="flex flex-col">
-        <FriendList />
-        {showAddFriend && <AddFriend initialFriends={initialFriends} />}
+      <div className="flex flex-col md:row-span-2">
+        <FriendList friends={friends} />
+        {showAddFriend && <AddFriend setFriends={setFriends} />}
+
         <div className="flex justify-end mt-7 ms-40 md:ms-24 w-1/2">
           <Button onClickBtn={handleAddFriend}>
             {showAddFriend ? "Close" : "Add friend"}
           </Button>
         </div>
       </div>
+
+      <SplitForm />
     </div>
   );
 }
 
-function FriendList() {
+function FriendList({ friends }) {
   return (
     <div className="md:w-2/3 mx-2">
       <ul className="space-y-2">
-        {initialFriends.map((el) => (
+        {friends.map((el) => (
           <Friend el={el} key={el.id} />
         ))}
       </ul>
