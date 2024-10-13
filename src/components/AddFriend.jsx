@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Button from "./Button";
 
-export default function AddFriend({ setFriends }) {
+export default function AddFriend({ handleAddFriend }) {
   const [name, setName] = useState("");
   const [image, setImage] = useState("https://i.pravatar.cc/48");
 
@@ -17,8 +17,9 @@ export default function AddFriend({ setFriends }) {
     e.preventDefault();
     if (!name || !image) {
       window.alert("Please enter a name and a image url");
+      return;
     }
-    setFriends((friends) => [...friends, newfriend]);
+    handleAddFriend(newfriend);
     setName("");
   }
 
