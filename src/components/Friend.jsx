@@ -5,7 +5,11 @@ export default function Friend({ el, onSelected, selectedFriend }) {
   // console.log(selectedFriend.id);
 
   return (
-    <li className="flex justify-between items-center px-2 py-3 rounded-lg hover:bg-orange-100 duration-200">
+    <li
+      className={`flex justify-between items-center px-2 py-3 rounded-lg hover:bg-orange-100 duration-200 ${
+        isSelected && "bg-orange-100"
+      }`}
+    >
       <div className="flex md:space-x-4 space-x-2">
         <div>
           <img className="rounded-full" src={el.image} alt="" />

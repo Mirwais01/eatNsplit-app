@@ -1,6 +1,12 @@
+import { useState } from "react";
 import Button from "./Button";
 
 export default function SplitForm({ selectedFriend }) {
+  const [bill, setBill] = useState("");
+  const [expense, setExpense] = useState("");
+  const [whosPaying, setWhosPaying] = useState("");
+  const payedByUse = bill ? bill - expense : "";
+
   return (
     <form
       action=""
@@ -15,6 +21,8 @@ export default function SplitForm({ selectedFriend }) {
           💲 Bill value
         </label>
         <input
+          value={bill}
+          onChange={(e) => setBill(Number(e.target.value))}
           type="text"
           className="md:w-32 w-20 border border-orange-300 text-center md:py-1 outline-0"
         />
@@ -25,6 +33,14 @@ export default function SplitForm({ selectedFriend }) {
           🧍‍♂️ Your expense
         </label>
         <input
+          value={expense}
+          onChange={(e) =>
+            setExpense(
+              Number(e.target.value) > bill
+                ? payedByUse
+                : Number(e.target.value)
+            )
+          }
           type="text"
           className="md:w-32 w-20 border border-orange-300 text-center md:py-1 outline-0"
         />
@@ -35,6 +51,7 @@ export default function SplitForm({ selectedFriend }) {
           👩🏻‍🤝‍🧑🏻 {selectedFriend.name}'s expense
         </label>
         <input
+          value={payedByUse}
           type="text"
           className="md:w-32 w-20 border border-orange-300 text-center md:py-1 outline-0"
           disabled
@@ -49,9 +66,11 @@ export default function SplitForm({ selectedFriend }) {
           name=""
           id=""
           className="md:w-32 w-20 border border-orange-300 text-center md:py-1 outline-0"
+          value={whosPaying}
+          onChange={(e) => setWhosPaying(e.target.value)}
         >
-          <option value="">You</option>
-          <option value="">{selectedFriend.name}</option>
+          <option value="user">You</option>
+          <option value="friend">{selectedFriend.name}</option>
         </select>
       </div>
 
