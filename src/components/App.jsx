@@ -44,6 +44,16 @@ export default function App() {
     setShowAddFriend(false);
   }
 
+  function splitBill(value) {
+    setFriends((friends) =>
+      friends.map((friend) =>
+        selectedFriend.id === friend.id
+          ? { ...friend, balance: (friend.balance += value) }
+          : friend
+      )
+    );
+  }
+
   return (
     <div className="container mx-auto md:px-12 py-16 grid grid-cols-1 md:grid-cols-2">
       <div className="flex flex-col md:row-span-2">
@@ -62,7 +72,9 @@ export default function App() {
         </div>
       </div>
 
-      {selectedFriend && <SplitForm selectedFriend={selectedFriend} />}
+      {selectedFriend && (
+        <SplitForm selectedFriend={selectedFriend} OnsplitBill={splitBill} />
+      )}
     </div>
   );
 }
